@@ -1,5 +1,5 @@
 $port = 8080
-$path = "C:\Users\Alumnos\.gemini\antigravity\scratch\pwa_abuelo"
+$path = $PSScriptRoot
 $listener = New-Object System.Net.HttpListener
 $listener.Prefixes.Add("http://localhost:$port/")
 $listener.Start()
