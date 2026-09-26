@@ -1,8 +1,13 @@
-const CACHE_NAME = 'pwa-abuelo-v1';
+const CACHE_NAME = 'pwa-abuelo-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './manifest.json',
+  './icon-192.png',
+  './icon-512.png',
+  './icons/Dani.jpg',
+  './icons/Juampi_.jpg',
+  './icons/Luisa.jpg',
   'https://cdn.tailwindcss.com'
 ];
 

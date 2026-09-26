@@ -423,13 +423,13 @@
       nombre: "Eda, Juan Carlos",
       telefono: "4932651",
       hijos: [
-        { nombre: "Juan Pablo", telefono: "+5491112345671" },
-        { nombre: "Gustavo", telefono: "+5491112345672" },
-        { nombre: "Daniel", telefono: "+5491112345673" }
+        { nombre: "JuanPi", telefono: "+5491112345671", foto: "icons/Juampi_.jpg" },
+        { nombre: "Gustavo", telefono: "+5491112345672", foto: "" },
+        { nombre: "Daniel", telefono: "+5491112345673", foto: "icons/Dani.jpg" }
       ],
       hermanos: [
-        { nombre: "Luisa", telefono: "+5491112345674" },
-        { nombre: "Techa", telefono: "+5491112345675" }
+        { nombre: "Luisa", telefono: "+5491112345674", foto: "icons/Luisa.jpg" },
+        { nombre: "Techa", telefono: "+5491112345675", foto: "" }
       ],
       emergencia: {
         nombre: "Ambulancia (107 / Vittal)",
@@ -466,6 +466,42 @@
       } else {
         appData = JSON.parse(JSON.stringify(defaultData));
       }
+
+      // Asegurar compatibilidad de fotos y nombres actualizados
+      if (!appData.hijos || appData.hijos.length === 0) {
+        appData.hijos = JSON.parse(JSON.stringify(defaultData.hijos));
+      } else {
+        appData.hijos.forEach((hijo, idx) => {
+          if (idx === 0) {
+            if (hijo.nombre === "Juan Pablo") hijo.nombre = "JuanPi";
+            if (!hijo.foto) hijo.foto = "icons/Juampi_.jpg";
+          }
+          if (idx === 2 && !hijo.foto) {
+            hijo.foto = "icons/Dani.jpg";
+          }
+          if (hijo.nombre.toLowerCase().includes("juan") && !hijo.foto) {
+            hijo.foto = "icons/Juampi_.jpg";
+          }
+          if (hijo.nombre.toLowerCase().includes("dan") && !hijo.foto) {
+            hijo.foto = "icons/Dani.jpg";
+          }
+        });
+      }
+
+      if (!appData.hermanos || appData.hermanos.length === 0) {
+        appData.hermanos = JSON.parse(JSON.stringify(defaultData.hermanos));
+      } else {
+        appData.hermanos.forEach((hermano, idx) => {
+          if (idx === 0 && !hermano.foto) {
+            hermano.foto = "icons/Luisa.jpg";
+          }
+          if (hermano.nombre.toLowerCase().includes("luisa") && !hermano.foto) {
+            hermano.foto = "icons/Luisa.jpg";
+          }
+        });
+      }
+
+      guardarEnStorage();
       renderUI();
     }
 
@@ -487,17 +523,28 @@
       appData.hijos.forEach((hijo, index) => {
         const a = document.createElement('a');
         a.href = `tel:${hijo.telefono}`;
-        a.className = "block w-full bg-white hover:bg-teal-50 border-3 border-teal-500 text-teal-950 p-4 btn-rounded shadow-md flex items-center justify-between btn-active transition-all";
+        a.className = "block w-full bg-white hover:bg-teal-50/70 border-3 border-teal-500 text-teal-950 p-3 sm:p-4 btn-rounded shadow-md flex items-center justify-between gap-3 sm:gap-4 btn-active transition-all";
         a.setAttribute('aria-label', `Llamar a su hijo ${hijo.nombre}`);
+
+        const avatarHtml = hijo.foto ? `
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 border-teal-500 shadow-md flex-shrink-0 bg-slate-100 flex items-center justify-center">
+            <img src="${hijo.foto}" alt="${hijo.nombre}" class="w-full h-full object-cover object-center" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\\'text-3xl sm:text-4xl\\'>👤</span>';">
+          </div>
+        ` : `
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-teal-100 border-2 border-teal-200 flex items-center justify-center flex-shrink-0 text-3xl sm:text-4xl shadow-inner">
+            👤
+          </div>
+        `;
+
         a.innerHTML = `
-          <div class="flex items-center gap-4">
-            <span class="text-4xl bg-teal-100 p-2.5 rounded-2xl" aria-hidden="true">👤</span>
-            <div class="text-left">
+          <div class="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
+            ${avatarHtml}
+            <div class="text-left min-w-0">
               <span class="block text-xs font-bold uppercase tracking-wider text-teal-700">Hijo ${index + 1}</span>
-              <span class="block text-2xl font-black text-slate-900">${hijo.nombre}</span>
+              <span class="block text-2xl sm:text-3xl font-black text-slate-900 leading-tight truncate">${hijo.nombre}</span>
             </div>
           </div>
-          <span class="text-3xl bg-teal-600 text-white p-3 rounded-full shadow">📞</span>
+          <span class="text-3xl bg-emerald-600 hover:bg-emerald-700 text-white p-3 sm:p-3.5 rounded-full shadow-lg flex-shrink-0">📞</span>
         `;
         containerHijos.appendChild(a);
       });
@@ -508,17 +555,28 @@
       appData.hermanos.forEach((hermano, index) => {
         const a = document.createElement('a');
         a.href = `tel:${hermano.telefono}`;
-        a.className = "block w-full bg-white hover:bg-teal-50 border-3 border-teal-500 text-teal-950 p-4 btn-rounded shadow-md flex items-center justify-between btn-active transition-all";
+        a.className = "block w-full bg-white hover:bg-teal-50/70 border-3 border-teal-500 text-teal-950 p-3 sm:p-4 btn-rounded shadow-md flex items-center justify-between gap-3 sm:gap-4 btn-active transition-all";
         a.setAttribute('aria-label', `Llamar a su hermano/a ${hermano.nombre}`);
+
+        const avatarHtml = hermano.foto ? `
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 border-teal-500 shadow-md flex-shrink-0 bg-slate-100 flex items-center justify-center">
+            <img src="${hermano.foto}" alt="${hermano.nombre}" class="w-full h-full object-cover object-center" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\\'text-3xl sm:text-4xl\\'>👤</span>';">
+          </div>
+        ` : `
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-teal-100 border-2 border-teal-200 flex items-center justify-center flex-shrink-0 text-3xl sm:text-4xl shadow-inner">
+            👤
+          </div>
+        `;
+
         a.innerHTML = `
-          <div class="flex items-center gap-4">
-            <span class="text-4xl bg-teal-100 p-2.5 rounded-2xl" aria-hidden="true">👤</span>
-            <div class="text-left">
+          <div class="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
+            ${avatarHtml}
+            <div class="text-left min-w-0">
               <span class="block text-xs font-bold uppercase tracking-wider text-teal-700">Hermano/a ${index + 1}</span>
-              <span class="block text-2xl font-black text-slate-900">${hermano.nombre}</span>
+              <span class="block text-2xl sm:text-3xl font-black text-slate-900 leading-tight truncate">${hermano.nombre}</span>
             </div>
           </div>
-          <span class="text-3xl bg-teal-600 text-white p-3 rounded-full shadow">📞</span>
+          <span class="text-3xl bg-emerald-600 hover:bg-emerald-700 text-white p-3 sm:p-3.5 rounded-full shadow-lg flex-shrink-0">📞</span>
         `;
         containerHermanos.appendChild(a);
       });
@@ -550,10 +608,14 @@
       const inputsHijos = document.getElementById('inputs-hijos');
       inputsHijos.innerHTML = '';
       appData.hijos.forEach((hijo, i) => {
+        const thumb = hijo.foto ? `<img src="${hijo.foto}" alt="" class="w-12 h-12 rounded-xl object-cover border-2 border-teal-500 shadow-sm flex-shrink-0">` : `<span class="text-2xl bg-teal-100 p-2 rounded-xl flex-shrink-0">👤</span>`;
         inputsHijos.innerHTML += `
-          <div class="grid grid-cols-2 gap-2">
-            <input type="text" id="input-hijo-nombre-${i}" value="${hijo.nombre}" placeholder="Nombre hijo ${i+1}" required class="p-3 text-lg rounded-xl border-2 border-slate-300">
-            <input type="tel" id="input-hijo-tel-${i}" value="${hijo.telefono}" placeholder="Teléfono ${i+1}" required class="p-3 text-lg rounded-xl border-2 border-slate-300">
+          <div class="flex items-center gap-2">
+            ${thumb}
+            <div class="grid grid-cols-2 gap-2 flex-1">
+              <input type="text" id="input-hijo-nombre-${i}" value="${hijo.nombre}" placeholder="Nombre hijo ${i+1}" required class="p-3 text-lg rounded-xl border-2 border-slate-300">
+              <input type="tel" id="input-hijo-tel-${i}" value="${hijo.telefono}" placeholder="Teléfono ${i+1}" required class="p-3 text-lg rounded-xl border-2 border-slate-300">
+            </div>
           </div>
         `;
       });
@@ -562,10 +624,14 @@
       const inputsHermanos = document.getElementById('inputs-hermanos');
       inputsHermanos.innerHTML = '';
       appData.hermanos.forEach((hermano, i) => {
+        const thumb = hermano.foto ? `<img src="${hermano.foto}" alt="" class="w-12 h-12 rounded-xl object-cover border-2 border-teal-500 shadow-sm flex-shrink-0">` : `<span class="text-2xl bg-teal-100 p-2 rounded-xl flex-shrink-0">👤</span>`;
         inputsHermanos.innerHTML += `
-          <div class="grid grid-cols-2 gap-2">
-            <input type="text" id="input-hermano-nombre-${i}" value="${hermano.nombre}" placeholder="Nombre hermano ${i+1}" required class="p-3 text-lg rounded-xl border-2 border-slate-300">
-            <input type="tel" id="input-hermano-tel-${i}" value="${hermano.telefono}" placeholder="Teléfono ${i+1}" required class="p-3 text-lg rounded-xl border-2 border-slate-300">
+          <div class="flex items-center gap-2">
+            ${thumb}
+            <div class="grid grid-cols-2 gap-2 flex-1">
+              <input type="text" id="input-hermano-nombre-${i}" value="${hermano.nombre}" placeholder="Nombre hermano ${i+1}" required class="p-3 text-lg rounded-xl border-2 border-slate-300">
+              <input type="tel" id="input-hermano-tel-${i}" value="${hermano.telefono}" placeholder="Teléfono ${i+1}" required class="p-3 text-lg rounded-xl border-2 border-slate-300">
+            </div>
           </div>
         `;
       });
@@ -600,14 +666,16 @@
       appData.nombre = document.getElementById('input-nombre').value.trim();
       appData.telefono = document.getElementById('input-telefono').value.trim();
 
-      // Guardar Hijos
-      appData.hijos = appData.hijos.map((_, i) => ({
+      // Guardar Hijos preservando fotos
+      appData.hijos = appData.hijos.map((h, i) => ({
+        ...h,
         nombre: document.getElementById(`input-hijo-nombre-${i}`).value.trim(),
         telefono: document.getElementById(`input-hijo-tel-${i}`).value.trim()
       }));
 
-      // Guardar Hermanos
-      appData.hermanos = appData.hermanos.map((_, i) => ({
+      // Guardar Hermanos preservando fotos
+      appData.hermanos = appData.hermanos.map((hermano, i) => ({
+        ...hermano,
         nombre: document.getElementById(`input-hermano-nombre-${i}`).value.trim(),
         telefono: document.getElementById(`input-hermano-tel-${i}`).value.trim()
       }));
