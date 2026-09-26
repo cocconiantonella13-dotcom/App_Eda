@@ -7,6 +7,7 @@ const ASSETS_TO_CACHE = [
   './icon-512.png',
   './icons/Dani.jpg',
   './icons/Juampi_.jpg',
+  './icons/Gustavo.jpg',
   './icons/Luisa.jpg',
   'https://cdn.tailwindcss.com'
 ];

@@ -83,7 +83,12 @@ App_Eda/
 ├── README.md               # Documentación completa y enlaces del proyecto
 ├── .gitignore              # Archivos temporales ignorados por Git
 ├── server.ps1              # Servidor local ligero para pruebas en Windows
-└── create-icons.js         # Script auxiliar
+├── create-icons.js         # Script auxiliar
+└── icons/                  # Fotos de perfil optimizadas para contactos
+    ├── Gustavo.jpg         # Foto de Gustavo (Hijo 1)
+    ├── Dani.jpg            # Foto de Daniel (Hijo 2)
+    ├── Juampi_.jpg         # Foto de Juanpi (Hijo 3)
+    └── Luisa.jpg           # Foto de Luisa (Hermana)
 ```
 
 ---

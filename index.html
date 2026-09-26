@@ -423,9 +423,9 @@
       nombre: "Eda, Juan Carlos",
       telefono: "4932651",
       hijos: [
-        { nombre: "JuanPi", telefono: "+5491112345671", foto: "icons/Juampi_.jpg" },
-        { nombre: "Gustavo", telefono: "+5491112345672", foto: "" },
-        { nombre: "Daniel", telefono: "+5491112345673", foto: "icons/Dani.jpg" }
+        { nombre: "Gustavo", telefono: "+3516883193", foto: "icons/Gustavo.jpg" },
+        { nombre: "Daniel", telefono: "+3513569370", foto: "icons/Dani.jpg" },
+        { nombre: "Juanpi", telefono: "+3516835967", foto: "icons/Juampi_.jpg" }
       ],
       hermanos: [
         { nombre: "Luisa", telefono: "+5491112345674", foto: "icons/Luisa.jpg" },
@@ -467,26 +467,15 @@
         appData = JSON.parse(JSON.stringify(defaultData));
       }
 
-      // Asegurar compatibilidad de fotos y nombres actualizados
-      if (!appData.hijos || appData.hijos.length === 0) {
+      // Asegurar orden oficial predeterminado de hijos con sus fotos y teléfonos
+      if (!appData.hijos || appData.hijos.length !== 3 || appData.hijos[0].nombre !== "Gustavo") {
         appData.hijos = JSON.parse(JSON.stringify(defaultData.hijos));
       } else {
-        appData.hijos.forEach((hijo, idx) => {
-          if (idx === 0) {
-            if (hijo.nombre === "Juan Pablo") hijo.nombre = "JuanPi";
-            if (!hijo.foto) hijo.foto = "icons/Juampi_.jpg";
-          }
-          if (idx === 2 && !hijo.foto) {
-            hijo.foto = "icons/Dani.jpg";
-          }
-          if (hijo.nombre.toLowerCase().includes("juan") && !hijo.foto) {
-            hijo.foto = "icons/Juampi_.jpg";
-          }
-          if (hijo.nombre.toLowerCase().includes("dan") && !hijo.foto) {
-            hijo.foto = "icons/Dani.jpg";
-          }
-        });
+        appData.hijos[0].foto = "icons/Gustavo.jpg";
+        appData.hijos[1].foto = "icons/Dani.jpg";
+        appData.hijos[2].foto = "icons/Juampi_.jpg";
       }
+
 
       if (!appData.hermanos || appData.hermanos.length === 0) {
         appData.hermanos = JSON.parse(JSON.stringify(defaultData.hermanos));

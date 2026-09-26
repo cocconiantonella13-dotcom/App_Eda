@@ -1,9 +1,10 @@
 $port = 8080
-$path = $PSScriptRoot
+$path = if ($PSScriptRoot) { $PSScriptRoot } else { "c:\Users\Alumnos\Documents\GitHub\App_Eda" }
+
 $listener = New-Object System.Net.HttpListener
 $listener.Prefixes.Add("http://localhost:$port/")
 $listener.Start()
-Write-Host "Servidor web robusto escuchando en http://localhost:$port/"
+Write-Output "Server running at http://localhost:$port/"
 
 while ($listener.IsListening) {
     try {
@@ -14,7 +15,8 @@ while ($listener.IsListening) {
         $reqUrl = $request.Url.LocalPath
         if ($reqUrl -eq '/') { $reqUrl = '/index.html' }
         
-        $filePath = Join-Path $path $reqUrl.TrimStart('/')
+        $relPath = $reqUrl.TrimStart('/').Replace('/', [System.IO.Path]::DirectorySeparatorChar)
+        $filePath = Join-Path $path $relPath
         
         if (Test-Path $filePath -PathType Leaf) {
             $bytes = [System.IO.File]::ReadAllBytes($filePath)
@@ -23,6 +25,7 @@ while ($listener.IsListening) {
             elseif ($filePath.EndsWith(".json")) { $response.ContentType = "application/json; charset=utf-8" }
             elseif ($filePath.EndsWith(".js")) { $response.ContentType = "application/javascript; charset=utf-8" }
             elseif ($filePath.EndsWith(".png")) { $response.ContentType = "image/png" }
+            elseif ($filePath.EndsWith(".jpg") -or $filePath.EndsWith(".jpeg")) { $response.ContentType = "image/jpeg" }
             elseif ($filePath.EndsWith(".css")) { $response.ContentType = "text/css" }
             else { $response.ContentType = "application/octet-stream" }
             
@@ -35,6 +38,6 @@ while ($listener.IsListening) {
         }
         $response.OutputStream.Close()
     } catch {
-        # Catch individual connection errors without shutting down server
+        # Catch individual request/connection abort errors and continue serving
     }
 }
