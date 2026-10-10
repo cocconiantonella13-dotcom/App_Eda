@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pwa-abuelo-v3';
+const CACHE_NAME = 'pwa-abuelo-v5';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

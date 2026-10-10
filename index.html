@@ -146,14 +146,14 @@
 
       <div class="grid grid-cols-1 gap-4">
 
-        <!-- BOTÓN 1: EMERGENCIAS (AMBULANCIA) -->
-        <a id="link-emergencia" href="tel:107" class="block w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white p-5 btn-rounded shadow-xl flex items-center justify-between border-4 border-red-400 btn-active focus:ring-4 focus:ring-red-400">
+        <!-- BOTÓN 1: EMERGENCIAS (VITAL) -->
+        <a id="link-emergencia" href="tel:08108884217" class="block w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white p-5 btn-rounded shadow-xl flex items-center justify-between border-4 border-red-400 btn-active focus:ring-4 focus:ring-red-400">
           <div class="flex items-center gap-4">
             <span class="text-5xl bg-white/20 p-3 rounded-2xl" aria-hidden="true">🚑</span>
             <div class="text-left">
               <span class="block text-xs font-bold uppercase tracking-widest text-red-200">¡Urgente!</span>
               <span class="block text-2xl sm:text-3xl font-black leading-tight">EMERGENCIAS</span>
-              <span id="view-emergencia-nombre" class="block text-lg font-bold text-red-100">Ambulancia (107 / Vittal)</span>
+              <span id="view-emergencia-nombre" class="block text-lg font-bold text-red-100">Vital</span>
             </div>
           </div>
           <span class="text-4xl bg-white/20 p-3 rounded-full flex-shrink-0">📞</span>
@@ -240,8 +240,9 @@
             <span class="text-2xl" aria-hidden="true">💊</span>
             <div>
               <span class="block text-xs font-bold text-slate-500 uppercase tracking-wider">Información Médica / Medicación</span>
-              <p id="view-info-medica" class="text-lg font-bold text-slate-800 leading-snug">
-                Diabético, Presión Alta, Toma Sintrom todas las noches.
+              <p id="view-info-medica" class="text-lg font-bold text-slate-800 leading-snug whitespace-pre-line">
+                Eda: diabética / hipertensa / Stent / parkinson
+                Juan Carlos: diabético, hipertenso, Stent
               </p>
             </div>
           </div>
@@ -296,7 +297,7 @@
 
         <!-- FAMILIARES - HERMANOS -->
         <fieldset class="space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200">
-          <legend class="font-black text-lg text-teal-900 px-2">🤝 Hermanos/as (2 Contactos)</legend>
+          <legend class="font-black text-lg text-teal-900 px-2">🤝 Hermanos/as</legend>
           <div id="inputs-hermanos" class="space-y-3">
             <!-- Inputs dinámicos -->
           </div>
@@ -308,8 +309,8 @@
           <div>
             <label class="block font-bold text-slate-700 mb-1">Servicio de Emergencia (Nombre / Número):</label>
             <div class="grid grid-cols-2 gap-2">
-              <input type="text" id="input-emergencia-nombre" placeholder="Nombre (ej: Ambulancia)" required class="p-3 text-lg rounded-xl border-2 border-slate-300">
-              <input type="tel" id="input-emergencia-tel" placeholder="Número (ej: 107)" required class="p-3 text-lg rounded-xl border-2 border-slate-300">
+              <input type="text" id="input-emergencia-nombre" placeholder="Nombre (ej: Vital)" required class="p-3 text-lg rounded-xl border-2 border-slate-300">
+              <input type="tel" id="input-emergencia-tel" placeholder="Número (ej: 08108884217)" required class="p-3 text-lg rounded-xl border-2 border-slate-300">
             </div>
           </div>
           <div>
@@ -431,12 +432,11 @@
         { nombre: "Juanpi", telefono: "+3516835967", foto: "icons/Juampi_.jpg" }
       ],
       hermanos: [
-        { nombre: "Luisa", telefono: "+5491112345674", foto: "icons/Luisa.jpg" },
-        { nombre: "Techa", telefono: "+5491112345675", foto: "" }
+        { nombre: "Luisa", telefono: "3518692430", foto: "icons/Luisa.jpg" }
       ],
       emergencia: {
-        nombre: "Ambulancia (107 / Vittal)",
-        telefono: "107"
+        nombre: "Vital",
+        telefono: "08108884217"
       },
       hospital: {
         nombre: "Hospital Italiano",
@@ -451,7 +451,7 @@
         dni: "12.345.678",
         sangre: "A Positivo",
         alergias: "A la penicilina",
-        infoMedica: "Diabético, Presión Alta, Toma Sintrom."
+        infoMedica: "Eda: diabética / hipertensa / Stent / parkinson\nJuan Carlos: diabético, hipertenso, Stent"
       }
     };
 
@@ -468,6 +468,20 @@
         }
       } else {
         appData = JSON.parse(JSON.stringify(defaultData));
+      }
+
+      // Asegurar información médica oficial actualizada
+      if (!appData.carnet || !appData.carnet.infoMedica || appData.carnet.infoMedica.includes("Sintrom")) {
+        if (!appData.carnet) appData.carnet = JSON.parse(JSON.stringify(defaultData.carnet));
+        appData.carnet.infoMedica = defaultData.carnet.infoMedica;
+      }
+
+      // Asegurar datos oficiales de Servicio de Emergencia Vital
+      if (!appData.emergencia || appData.emergencia.telefono === "107" || appData.emergencia.nombre.includes("107")) {
+        appData.emergencia = {
+          nombre: "Vital",
+          telefono: "08108884217"
+        };
       }
 
       // Asegurar datos oficiales de Hospital Italiano y Doctora Saavedra
@@ -493,18 +507,11 @@
         appData.hijos[2].foto = "icons/Juampi_.jpg";
       }
 
-
-      if (!appData.hermanos || appData.hermanos.length === 0) {
+      // Asegurar que en hermanas solo esté Luisa con su teléfono actualizado (sin Techa)
+      if (!appData.hermanos || appData.hermanos.length !== 1 || appData.hermanos[0].nombre !== "Luisa" || appData.hermanos[0].telefono !== "3518692430") {
         appData.hermanos = JSON.parse(JSON.stringify(defaultData.hermanos));
       } else {
-        appData.hermanos.forEach((hermano, idx) => {
-          if (idx === 0 && !hermano.foto) {
-            hermano.foto = "icons/Luisa.jpg";
-          }
-          if (hermano.nombre.toLowerCase().includes("luisa") && !hermano.foto) {
-            hermano.foto = "icons/Luisa.jpg";
-          }
-        });
+        appData.hermanos[0].foto = "icons/Luisa.jpg";
       }
 
       guardarEnStorage();
@@ -562,7 +569,7 @@
         const a = document.createElement('a');
         a.href = `tel:${hermano.telefono}`;
         a.className = "block w-full bg-white hover:bg-teal-50/70 border-3 border-teal-500 text-teal-950 p-3 sm:p-4 btn-rounded shadow-md flex items-center justify-between gap-3 sm:gap-4 btn-active transition-all";
-        a.setAttribute('aria-label', `Llamar a su hermano/a ${hermano.nombre}`);
+        a.setAttribute('aria-label', `Llamar a su hermana ${hermano.nombre}`);
 
         const avatarHtml = hermano.foto ? `
           <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 border-teal-500 shadow-md flex-shrink-0 bg-slate-100 flex items-center justify-center">
@@ -578,7 +585,7 @@
           <div class="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
             ${avatarHtml}
             <div class="text-left min-w-0">
-              <span class="block text-xs font-bold uppercase tracking-wider text-teal-700">Hermano/a ${index + 1}</span>
+              <span class="block text-xs font-bold uppercase tracking-wider text-teal-700">${appData.hermanos.length === 1 ? 'Hermana' : 'Hermano/a ' + (index + 1)}</span>
               <span class="block text-2xl sm:text-3xl font-black text-slate-900 leading-tight truncate">${hermano.nombre}</span>
             </div>
           </div>
