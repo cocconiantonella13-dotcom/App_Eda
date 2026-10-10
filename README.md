@@ -26,7 +26,7 @@
 | Característica | Descripción |
 | :--- | :--- |
 | 📞 **Llamadas Rápidas en 1 Toque** | Botones de gran visibilidad con nombres claros para llamar directamente a hijos y hermanos sin entrar a menús complicados. |
-| 🚨 **Llamado Rápido a Emergencias** | Acceso inmediato a la ambulancia (**107 / Vittal**), hospital o clínica de cabecera (**Hospital Italiano**) y médico particular. |
+| 🚨 **Llamado Rápido a Emergencias** | Acceso inmediato a la ambulancia (**107 / Vittal**), hospital de cabecera (**Hospital Italiano: 4106509**) y médica particular (**Doctora Saavedra: 3517066091**). |
 | 🪪 **Carnet Digital de Salud** | Ficha médica siempre a la vista con Obra Social/Prepaga (PAMI), DNI, grupo sanguíneo, alergias y medicación habitual. |
 | ⚙️ **Panel de Configuración Familiar** | Menú accesible con el ícono de engranaje (⚙️) para modificar nombres, teléfonos y datos médicos guardándolos de forma segura en el celular (`localStorage`). |
 | 📱 **Tecnología PWA (Instalable)** | Se puede añadir a la pantalla de inicio del celular como una app nativa, sin ocupar espacio innecesario ni depender de tiendas de apps. |
@@ -84,7 +84,8 @@ App_Eda/
 ├── .gitignore              # Archivos temporales ignorados por Git
 ├── server.ps1              # Servidor local ligero para pruebas en Windows
 ├── create-icons.js         # Script auxiliar
-└── icons/                  # Fotos de perfil optimizadas para contactos
+└── icons/                  # Fotos y logo de la aplicación
+    ├── logo.jpg            # Logo oficial de la aplicación
     ├── Gustavo.jpg         # Foto de Gustavo (Hijo 1)
     ├── Dani.jpg            # Foto de Daniel (Hijo 2)
     ├── Juampi_.jpg         # Foto de Juanpi (Hijo 3)

@@ -9,7 +9,8 @@
   <meta name="theme-color" content="#0d9488">
   <meta name="description" content="APP ABUELOS - Aplicación de llamadas rápidas y carnet de salud accesibles para adultos mayores.">
   <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="icon" type="image/jpeg" href="icons/logo.jpg">
+  <link rel="apple-touch-icon" href="icons/logo.jpg">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
@@ -70,9 +71,9 @@
   <!-- ENCABEZADO Y MIS DATOS -->
   <header role="banner" class="bg-gradient-to-b from-teal-700 via-teal-600 to-turquoise-600 text-white px-5 pt-7 pb-6 card-rounded rounded-t-none shadow-lg">
     <div class="flex justify-between items-center mb-4">
-      <!-- Insignia de Nombre APP ABUELOS -->
-      <div class="flex items-center gap-2 bg-teal-900/60 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-teal-300/30 text-teal-100 font-extrabold text-sm uppercase tracking-wider shadow-sm">
-        <span class="text-base" aria-hidden="true">👴👵</span>
+      <!-- Insignia de Nombre APP ABUELOS con Logo -->
+      <div class="flex items-center gap-2.5 bg-teal-900/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-teal-300/30 text-teal-100 font-extrabold text-sm uppercase tracking-wider shadow-sm">
+        <img src="icons/logo.jpg" alt="Logo APP ABUELOS" class="w-7 h-7 rounded-full object-cover border border-teal-300 shadow-sm" onerror="this.onerror=null; this.outerHTML='<span class=\'text-base\'>👴👵</span>';">
         <span>APP ABUELOS</span>
       </div>
 
@@ -159,7 +160,7 @@
         </a>
 
         <!-- BOTÓN 2: HOSPITAL -->
-        <a id="link-hospital" href="tel:01149590200" class="block w-full bg-gradient-to-r from-sky-700 to-sky-800 hover:from-sky-800 hover:to-sky-900 text-white p-5 btn-rounded shadow-lg flex items-center justify-between border-2 border-sky-500 btn-active">
+        <a id="link-hospital" href="tel:4106509" class="block w-full bg-gradient-to-r from-sky-700 to-sky-800 hover:from-sky-800 hover:to-sky-900 text-white p-5 btn-rounded shadow-lg flex items-center justify-between border-2 border-sky-500 btn-active">
           <div class="flex items-center gap-4">
             <span class="text-4xl bg-white/20 p-3 rounded-2xl" aria-hidden="true">🏥</span>
             <div class="text-left">
@@ -171,12 +172,12 @@
         </a>
 
         <!-- BOTÓN 3: MÉDICO DE CABECERA -->
-        <a id="link-doctor" href="tel:1555554321" class="block w-full bg-gradient-to-r from-emerald-700 to-emerald-800 hover:from-emerald-800 hover:to-emerald-900 text-white p-5 btn-rounded shadow-lg flex items-center justify-between border-2 border-emerald-500 btn-active">
+        <a id="link-doctor" href="tel:3517066091" class="block w-full bg-gradient-to-r from-emerald-700 to-emerald-800 hover:from-emerald-800 hover:to-emerald-900 text-white p-5 btn-rounded shadow-lg flex items-center justify-between border-2 border-emerald-500 btn-active">
           <div class="flex items-center gap-4">
-            <span class="text-4xl bg-white/20 p-3 rounded-2xl" aria-hidden="true">👨‍⚕️</span>
+            <span class="text-4xl bg-white/20 p-3 rounded-2xl" aria-hidden="true">👩‍⚕️</span>
             <div class="text-left">
               <span class="block text-xs font-bold uppercase tracking-widest text-emerald-200">Doctor/a Principal</span>
-              <span id="view-doctor-nombre" class="block text-2xl font-black leading-tight">Dr. García</span>
+              <span id="view-doctor-nombre" class="block text-2xl font-black leading-tight">Doctora Saavedra</span>
             </div>
           </div>
           <span class="text-4xl bg-white/20 p-3 rounded-full flex-shrink-0">📞</span>
@@ -252,8 +253,9 @@
   </main>
 
   <!-- PIE DE PÁGINA -->
-  <footer class="text-center py-6 px-4 bg-slate-200 text-slate-600 text-sm font-semibold border-t border-slate-300">
-    <p>👴👵 <strong>APP ABUELOS</strong> - Aplicación Accesible de Botón Grande para el Adulto Mayor</p>
+  <footer class="text-center py-6 px-4 bg-slate-200 text-slate-600 text-sm font-semibold border-t border-slate-300 flex items-center justify-center gap-2">
+    <img src="icons/logo.jpg" alt="Logo" class="w-6 h-6 rounded-full object-cover inline-block" onerror="this.onerror=null; this.style.display='none';">
+    <p><strong>APP ABUELOS</strong> - Aplicación Accesible de Botón Grande para el Adulto Mayor</p>
   </footer>
 
   <!-- MODAL DE AJUSTES (PARA EDITAR DATOS) -->
@@ -373,8 +375,9 @@
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-6">
       
       <div class="flex justify-between items-center border-b-2 border-slate-200 pb-4">
-        <h2 id="modal-install-title" class="text-2xl font-black text-teal-800 flex items-center gap-2">
-          <span>📱</span> Instalar APP ABUELOS
+        <h2 id="modal-install-title" class="text-2xl font-black text-teal-800 flex items-center gap-2.5">
+          <img src="icons/logo.jpg" alt="Logo APP ABUELOS" class="w-8 h-8 rounded-full object-cover border border-teal-500 shadow-sm" onerror="this.onerror=null; this.outerHTML='<span>📱</span>';">
+          <span>Instalar APP ABUELOS</span>
         </h2>
         <button onclick="cerrarModalInstalar()" aria-label="Cerrar ventana de instalación" class="text-slate-400 hover:text-slate-700 text-3xl font-bold p-2">
           ✕
@@ -437,11 +440,11 @@
       },
       hospital: {
         nombre: "Hospital Italiano",
-        telefono: "01149590200"
+        telefono: "4106509"
       },
       doctor: {
-        nombre: "Dr. García",
-        telefono: "+5491155554321"
+        nombre: "Doctora Saavedra",
+        telefono: "3517066091"
       },
       carnet: {
         obraSocial: "PAMI",
@@ -465,6 +468,20 @@
         }
       } else {
         appData = JSON.parse(JSON.stringify(defaultData));
+      }
+
+      // Asegurar datos oficiales de Hospital Italiano y Doctora Saavedra
+      if (!appData.doctor || appData.doctor.nombre === "Dr. García" || appData.doctor.telefono === "1555554321" || appData.doctor.telefono === "+5491155554321") {
+        appData.doctor = {
+          nombre: "Doctora Saavedra",
+          telefono: "3517066091"
+        };
+      }
+      if (!appData.hospital || appData.hospital.telefono === "01149590200") {
+        appData.hospital = {
+          nombre: "Hospital Italiano",
+          telefono: "4106509"
+        };
       }
 
       // Asegurar orden oficial predeterminado de hijos con sus fotos y teléfonos
